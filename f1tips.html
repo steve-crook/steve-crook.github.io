@@ -2,7 +2,7 @@
 layout: default
 title: F1 Tips 2019
 ---
-
+<h3 id="loading-message">Loading, please wait</h3>
 <table id="points-table" class="display nowrap" width="100%">
   <thead>
     <tr>
@@ -27,6 +27,7 @@ title: F1 Tips 2019
                      simpleSheet: false } )
   }
   function showInfo(data, tabletop) {
+    $("#loading-message").hide();
     var pointsData = data["Points"];
     pointsData.elements.sort((a,b) => b.Total - a.Total);
     var racePriority = pointsData.columnNames.length - 2;
