@@ -34,11 +34,10 @@ layout: default
       var racePriority = pointsData.columnNames.length - 2;
       for (var columnName of pointsData.columnNames) {
         var priority = columnName == "Tipper" || columnName == "Total" ? 1 : racePriority--;
-        if (pointsData.elements.reduce((sum, el) => sum + +el[columnName], 0) == 0) {
-          priority = 10000;
+        if (pointsData.elements.reduce((sum, el) => sum + +el[columnName], 0) > 0) {
+          $("#points-table thead tr")
+            .append("<th data-priority='" + priority + "'>" + columnName + "</th>");
         }
-        $("#points-table thead tr")
-          .append("<th data-priority='" + priority + "'>" + columnName + "</th>");
       }
       for (var tipper of pointsData.elements) {
         var row = "<tr>";
