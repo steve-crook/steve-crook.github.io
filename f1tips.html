@@ -1,0 +1,64 @@
+---
+layout: default
+---
+<!DOCTYPE html>
+<html>
+<body>
+  <table id="points-table" class="display nowrap" width="100%">
+    <thead>
+      <tr>
+      </tr>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/1.5.1/tabletop.min.js'></script>
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.18/r-2.2.2/datatables.min.css"/>
+  <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.18/r-2.2.2/datatables.min.js"></script>
+  <style type="text/css">
+    .site-footer, .page-header { display: none; }
+    table.dataTable.no-footer { border-bottom: none; }
+  </style>
+  <script type='text/javascript'>    
+    var publicSpreadsheetUrl = 'https://docs.google.com/spreadsheets/d/1VtBB6kgts0USnYyT7MSDhj5HVd8F5_dNu7Er4uwWfkQ/edit?usp=sharing';
+    function init() {
+      Tabletop.init( { key: publicSpreadsheetUrl,
+                       callback: showInfo,
+                       simpleSheet: false } )
+    }
+    function showInfo(data, tabletop) {
+      var pointsData = data["Points"];
+      pointsData.elements.sort((a,b) => b.Total - a.Total);
+      var racePriority = pointsData.columnNames.length - 2;
+      var usedColumnNames = [];
+      for (var columnName of pointsData.columnNames) {
+        var priority = columnName == "Tipper" || columnName == "Total" ? 1 : racePriority--;
+        if (columnName == "Tipper" || 
+            columnName == "Total" ||
+            pointsData.elements.reduce((sum, el) => sum + +el[columnName], 0) > 0) {
+          usedColumnNames.push(columnName);
+          $("#points-table thead tr")
+            .append("<th data-priority='" + priority + "'>" + columnName + "</th>");
+        }
+      }
+      for (var tipper of pointsData.elements) {
+        var row = "<tr>";
+        for (var columnName of usedColumnNames) {
+          row += "<td>" + tipper[columnName] + "</td>";
+        }
+        row += "</tr>";
+        $("#points-table tbody").append(row);
+      }
+      $('#points-table').DataTable( {
+        responsive: true,
+        searching: false,
+        paging: false,
+        ordering: false,
+        info: false
+      } );
+    }
+    window.addEventListener('DOMContentLoaded', init)
+  </script>
+</body>
+</html>
