@@ -4,25 +4,39 @@ layout: default
 <!DOCTYPE html>
 <html>
 <body>
-  <h1>Hello</h1>
-  <p>This is my first page</p>
+  <table id="points-table" class="display nowrap" width="100%">
+    <thead>
+      <tr>
+      </tr>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/1.5.1/tabletop.min.js'></script>
+  <script type='text/javascript'>    
+    var publicSpreadsheetUrl = 'https://docs.google.com/spreadsheets/d/1VtBB6kgts0USnYyT7MSDhj5HVd8F5_dNu7Er4uwWfkQ/edit?usp=sharing';
 
-<script src='https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/1.5.1/tabletop.min.js'></script>
-<script type='text/javascript'>    
-  var publicSpreadsheetUrl = 'https://docs.google.com/spreadsheets/d/1VtBB6kgts0USnYyT7MSDhj5HVd8F5_dNu7Er4uwWfkQ/edit?usp=sharing';
+    function init() {
+      Tabletop.init( { key: publicSpreadsheetUrl,
+                       callback: showInfo,
+                       simpleSheet: false } )
+    }
 
-  function init() {
-    Tabletop.init( { key: publicSpreadsheetUrl,
-                     callback: showInfo,
-                     simpleSheet: false } )
-  }
+    function showInfo(data, tabletop) {
+      var pointsData = data["Points"];
+      var racePriority = pointsData.columnNames.length - 2;
+      for (var columnName in pointsData.columnNames) {
+        var priority = columnName == "Tipper" || columnName == "Total" ? 1 : racePriority--;
+        if (pointsData.elements.reduce((sum, el) => sum + +el[columnName], 0) == 0) {
+          priority = 10000;
+        }
+        $("#points-table thead tr")
+          .append("<th data-priority='" + priority + "'>" + columnName + "</th>");
+      }
+    }
 
-  function showInfo(data, tabletop) {
-    alert('Successfully processed!')
-    console.log(data);
-  }
-
-  window.addEventListener('DOMContentLoaded', init)
-</script>
+    window.addEventListener('DOMContentLoaded', init)
+  </script>
 </body>
 </html>
