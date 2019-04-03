@@ -25,8 +25,9 @@ layout: default
 
     function showInfo(data, tabletop) {
       var pointsData = data["Points"];
+      pointsData.elements.sort((a,b) => b.Total - a.Total);
       var racePriority = pointsData.columnNames.length - 2;
-      for (var columnName in pointsData.columnNames) {
+      for (var columnName of pointsData.columnNames) {
         var priority = columnName == "Tipper" || columnName == "Total" ? 1 : racePriority--;
         if (pointsData.elements.reduce((sum, el) => sum + +el[columnName], 0) == 0) {
           priority = 10000;
