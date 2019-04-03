@@ -49,7 +49,9 @@ layout: default
         $("#points-table tbody").append(row);
       }
       $('#points-table').DataTable( {
-        responsive: true
+        responsive: true,
+        searching: false,
+        paging: false
       } );
     }
 
