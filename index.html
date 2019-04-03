@@ -32,16 +32,20 @@ layout: default
       var pointsData = data["Points"];
       pointsData.elements.sort((a,b) => b.Total - a.Total);
       var racePriority = pointsData.columnNames.length - 2;
+      var usedColumnNames = [];
       for (var columnName of pointsData.columnNames) {
         var priority = columnName == "Tipper" || columnName == "Total" ? 1 : racePriority--;
-        if (pointsData.elements.reduce((sum, el) => sum + +el[columnName], 0) > 0) {
+        if (columnName == "Tipper" || 
+            columnName == "Total" ||
+            pointsData.elements.reduce((sum, el) => sum + +el[columnName], 0) > 0) {
+          usedColumnNames.push(columnName);
           $("#points-table thead tr")
             .append("<th data-priority='" + priority + "'>" + columnName + "</th>");
         }
       }
       for (var tipper of pointsData.elements) {
         var row = "<tr>";
-        for (var columnName of pointsData.columnNames) {
+        for (var columnName of usedColumnNames) {
           row += "<td>" + tipper[columnName] + "</td>";
         }
         row += "</tr>";
