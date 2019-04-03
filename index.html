@@ -35,6 +35,14 @@ layout: default
         $("#points-table thead tr")
           .append("<th data-priority='" + priority + "'>" + columnName + "</th>");
       }
+      for (var tipper of pointsData.elements) {
+        var row = "<tr>";
+        for (var columnName of pointsData.columnNames) {
+          row += "<td>" + tipper[columnName] + "</td>";
+        }
+        row += "</tr>";
+        $("#points-table tbody").append(row);
+      }
     }
 
     window.addEventListener('DOMContentLoaded', init)
