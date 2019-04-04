@@ -21,6 +21,7 @@ title: F1 Tips 2019
   @media screen and (max-width: 500px) {
     .hide-from-mobile { display: none; }
   }
+  .flag { width: 20px; height: 15px; }
 </style>
 <script type='text/javascript'>    
   var publicSpreadsheetUrl = 'https://docs.google.com/spreadsheets/d/1VtBB6kgts0USnYyT7MSDhj5HVd8F5_dNu7Er4uwWfkQ/edit?usp=sharing';
@@ -47,7 +48,7 @@ title: F1 Tips 2019
         var code = data["Races"].elements.find(e => e.Name == columnName).Code.toLowerCase();
         $("#points-table thead tr")
           .append("<th data-priority='" + priority + "'><span class='hide-from-mobile'>" + columnName + "</span>" +
-                  " <img height='20' src='https://cdn.jsdelivr.net/npm/flag-icon-css@3.3.0/flags/4x3/" + code + ".svg' alt='" + columnName + "' /></th>");
+                  " <img class='flag' src='https://cdn.jsdelivr.net/npm/flag-icon-css@3.3.0/flags/4x3/" + code + ".svg' alt='" + columnName + "' /></th>");
       }
     }
     for (var tipper of pointsData.elements) {
