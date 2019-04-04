@@ -54,7 +54,7 @@ title: F1 Tips 2019
     for (var tipper of pointsData.elements) {
       var row = "<tr>";
       for (var columnName of usedColumnNames) {
-        row += "<td>" + tipper[columnName] + "</td>";
+        row += "<td" + (!isNaN(tipper[columnName]) ? " align='right'" : "") + ">" + tipper[columnName] + "</td>";
       }
       row += "</tr>";
       $("#points-table tbody").append(row);
