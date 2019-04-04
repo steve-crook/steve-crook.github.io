@@ -45,7 +45,7 @@ title: F1 Tips 2019
         usedColumnNames.push(columnName);
         $("#points-table thead tr")
           .append("<th data-priority='" + priority + "'>" + columnName + "</th>");
-      } else if (true) { //pointsData.elements.reduce((sum, el) => sum + +el[columnName], 0) > 0) {
+      } else if (pointsData.elements.reduce((sum, el) => sum + +el[columnName], 0) > 0) {
         usedColumnNames.push(columnName);
         var code = data["Races"].elements.find(e => e.Name == columnName).Code.toLowerCase();
         $("#points-table thead tr")
