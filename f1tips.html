@@ -18,6 +18,9 @@ title: F1 Tips 2019
 <style type="text/css">
   .site-footer, .page-header { display: none; }
   table.dataTable.no-footer { border-bottom: none; }
+  @media screen and (max-width: 500px) {
+    .hide-from-mobile { display: none; }
+  }
 </style>
 <script type='text/javascript'>    
   var publicSpreadsheetUrl = 'https://docs.google.com/spreadsheets/d/1VtBB6kgts0USnYyT7MSDhj5HVd8F5_dNu7Er4uwWfkQ/edit?usp=sharing';
@@ -43,18 +46,14 @@ title: F1 Tips 2019
         usedColumnNames.push(columnName);
         var code = data["Races"].elements.find(e => e.Name == columnName).Code.toLowerCase();
         $("#points-table thead tr")
-          .append("<th class='not-mobile' data-priority='" + priority + "'>" + columnName + "</th>" +
-                  "<th class='mobile' data-priority='" + priority + "'><img height='20' src='https://cdn.jsdelivr.net/npm/flag-icon-css@3.3.0/flags/4x3/" + code + ".svg' alt='" + columnName + "' /></th>");
+          .append("<th data-priority='" + priority + "'><span class='hide-from-mobile'>" + columnName + "</span>" +
+                  " <img height='20' src='https://cdn.jsdelivr.net/npm/flag-icon-css@3.3.0/flags/4x3/" + code + ".svg' alt='" + columnName + "' /></th>");
       }
     }
     for (var tipper of pointsData.elements) {
       var row = "<tr>";
       for (var columnName of usedColumnNames) {
         row += "<td>" + tipper[columnName] + "</td>";
-        if (columnName != "Tipper" &&
-            columnName != "Total") {
-          row += "<td>" + tipper[columnName] + "</td>";
-        }
       }
       row += "</tr>";
       $("#points-table tbody").append(row);
