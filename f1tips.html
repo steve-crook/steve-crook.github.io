@@ -57,8 +57,9 @@ title: F1 Tips 2019
         var name = data[""]
         $("#points-table thead tr")
           .append("<th data-priority='" + priority + "'><a href='#" + race.Name.toLowerCase().replace(' ', '-') + "'>" +
+                  "<img class='flag' src='https://cdn.jsdelivr.net/npm/flag-icon-css@3.3.0/flags/4x3/" + race.Code.toLowerCase() + ".svg' alt='" + columnName + "' /> " +
                   "<span class='hide-from-mobile'>" + columnName + "</span>" +
-                  " <img class='flag' src='https://cdn.jsdelivr.net/npm/flag-icon-css@3.3.0/flags/4x3/" + race.Code.toLowerCase() + ".svg' alt='" + columnName + "' /></a></th>");
+                  "</a></th>");
       }
     }
     for (var tipper of pointsData.elements) {
@@ -77,17 +78,16 @@ title: F1 Tips 2019
       info: false
     } );
     var racesData = data["Races"];
+    racesData.elements.sort((a,b) => b.Round - a.Round);
     for (var raceRow of racesData.elements) {
-      console.log(raceRow);
       var racePointsData = data[raceRow.Points];
       if (!racePointsData) {
-        break;
+        continue;
       }
-      var race = data["Races"].elements.find(e => e.Name == raceRow.Name);
       var raceNameClean = raceRow.Name.toLowerCase().replace(' ', '-');
       $(".main-content").append(
         "<h3 id='" + raceNameClean + "'>" +
-        "<img class='flag' src='https://cdn.jsdelivr.net/npm/flag-icon-css@3.3.0/flags/4x3/" + race.Code.toLowerCase() + ".svg' alt='" + columnName + "' /> " +
+        "<img class='flag' src='https://cdn.jsdelivr.net/npm/flag-icon-css@3.3.0/flags/4x3/" + raceRow.Code.toLowerCase() + ".svg' alt='" + columnName + "' /> " +
         raceRow.Name + "</h3>");
       var table = 
         "<table id='race-table-" + raceNameClean + "' class='race-table display nowrap' width='100%'>" +
