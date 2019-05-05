@@ -102,7 +102,9 @@ title: F1 Tips 2019
       racePointsData.elements.sort((a,b) => b.TotalPoints - a.TotalPoints);
       for (var tipper of racePointsData.elements) {
         if (tipper.Tipper == "Position") continue;
-        table += "<tr><td>" + tipper.Tipper + "</td>";
+        table += "<tr><td>" + tipper.Tipper + 
+          (tipper.TipsEntered ? "" : "<br>(No entry)") +
+          "</td>";
         for (var p = 1; p <= 6; p++) {
           table += "<td align='right'>" + tipper["P" + p + "Tip"].substr(0, 3).toUpperCase().replace('Ä', 'A') + 
           "<br>" + tipper["P" + p + "Points"] + "</td>";
